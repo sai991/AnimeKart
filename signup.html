@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+  <link rel="stylesheet" href="stylesignup.css"> <!-- Link to the shared CSS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> <!-- AngularJS CDN -->
+  <script src="signup.js"></script> <!-- Link to the JavaScript file -->
+</head>
+<body ng-app="signupApp" ng-controller="signupController">
+<div class="signup-container">
+  <div class="signup-box">
+    <h2 class="signup-header">Sign Up</h2>
+    <form id="signupForm" ng-submit="submitSignup()" novalidate>
+      <div class="input-box">
+        <input type="text" ng-model="user.firstName" id="firstName" placeholder="First Name" required>
+      </div>
+      <div class="input-box">
+        <input type="text" ng-model="user.lastName" id="lastName" placeholder="Last Name" required>
+      </div>
+      <div class="input-box">
+        <input type="email" ng-model="user.email" id="email" placeholder="Email Address" required>
+      </div>
+      <div class="input-box">
+        <input type="tel" ng-model="user.phoneNumber" id="phoneNumber" placeholder="Phone Number" pattern="[0-9]{10}" title="Enter a valid 10-digit phone number" required>
+      </div>
+      <div class="input-box">
+        <textarea ng-model="user.address" id="address" placeholder="Address" rows="3" required></textarea>
+      </div>
+      <div class="input-box">
+        <input type="password" ng-model="user.password" id="password" placeholder="Password" minlength="8" title="Password must be at least 8 characters" required>
+      </div>
+      <div class="input-box">
+        <input type="password" ng-model="user.confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+      </div>
+      <div class="button-box">
+        <button type="submit" class="btn">Sign Up</button>
+      </div>
+      <p class="error-message" id="signupErrorMessage"></p>
+    </form>
+    <p class="signup-link">
+      Already have an account? <a href="login.html">Login</a>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
