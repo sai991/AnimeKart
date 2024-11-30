@@ -48,6 +48,8 @@ function requestListener() {
 
     if (jsonObject.status === "success") {
         setUID(jsonObject.userId);
+        console.log("Setting USERID in session storage:", jsonObject.userId);
+
         window.location.href = "http://localhost:40109/HomePage.html";
     } else {
         println(jsonObject.message || "Login failed");
@@ -64,5 +66,6 @@ function println(outputStr) {
 }
 
 function setUID(UID) {
-    sessionStorage.setItem("UID", UID.toString());
+    sessionStorage.setItem("USERID", UID.toString());
+    
 }
