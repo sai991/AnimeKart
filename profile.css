@@ -1,0 +1,74 @@
+/* Profile Page Styling */
+
+ody {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  /* Toolbar Styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff6600; /* Same orange as homepage */
+    padding: 10px 30px;
+    color: white;
+  }
+  
+  .navbar h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
+
+
+
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff5e6;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h2 {
+    text-align: center;
+    color: #ff6600;
+  }
+  
+  .profile-field {
+    margin: 15px 0;
+    font-size: 16px;
+  }
+  
+  .profile-field strong {
+    color: #ff6600;
+  }
+  
+  #editProfile {
+    display: block;
+    margin: 20px auto;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #editProfile:hover {
+    background-color: #ff8533;
+  }
+  

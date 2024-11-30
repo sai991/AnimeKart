@@ -32,6 +32,7 @@ public class MyServer {
 
 	    // We want the form URL /passenger to go to PassengerServlet
 	    sHandler.addServlet(new ServletHolder(new HomePageServlet()),"/shopping");
+		sHandler.addServlet(new ServletHolder(new ProductServlet()),"/products");
 
 	    // An example of adding another servlet for another URL:
 	    // sHandler.addServlet(new ServletHolder(new AdminServlet()),"/admin");

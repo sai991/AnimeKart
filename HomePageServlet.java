@@ -94,6 +94,15 @@ public class HomePageServlet extends HttpServlet {
                 case "viewOrders":
                     outputJson = handleViewOrders(requestData.username);
                     break;
+                case "fetchProfile":
+                      HttpSession session = req.getSession(false); // Get the session, do not create a new one
+                      if (session != null && session.getAttribute("USERID") != null) {
+                     int userId = (int) session.getAttribute("USERID");
+                    outputJson = fetchProfile(userId); // Pass the userId to the fetchProfile method
+                          } else {
+                    outputJson = "{\"status\":\"error\",\"message\":\"User not logged in\"}";
+                      }
+                     break;
                 default:
                     outputJson = "{\"status\":\"error\",\"message\":\"Invalid action\"}";
             }
@@ -121,6 +130,7 @@ public class HomePageServlet extends HttpServlet {
                 // Store the USER_ID in HttpSession
                 HttpSession session = req.getSession();
                 session.setAttribute("USERID", userId);
+                System.out.println(session.getAttribute("USERID"));
                 return "{\"status\":\"success\",\"userId\":\"" + rs.getInt("USERID") + "\"}";
             } else {
                 return "{\"status\":\"failure\",\"message\":\"Invalid credentials\"}";
@@ -176,6 +186,33 @@ public class HomePageServlet extends HttpServlet {
             return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
         }
     }
+
+    private String fetchProfile(int userId) {
+    try {
+        String sql = "SELECT FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ADDRESS FROM USER WHERE USERID = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1,userId);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            Map<String, String> profile = new HashMap<>();
+            profile.put("firstName", rs.getString("FIRSTNAME"));
+            profile.put("lastName", rs.getString("LASTNAME"));
+            profile.put("email", rs.getString("EMAIL"));
+            profile.put("phoneNumber", rs.getString("PHONENUMBER"));
+            profile.put("address", rs.getString("ADDRESS"));
+
+            Gson gson = new Gson();
+            return gson.toJson(Map.of("status", "success", "profile", profile));
+        } else {
+            return "{\"status\":\"failure\",\"message\":\"User not found\"}";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
+    }
+}
+
 
     private String handleViewOrders(String username) {
         try {

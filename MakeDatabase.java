@@ -113,11 +113,11 @@ public class MakeDatabase {
         // Insert sample data
         sql = "INSERT INTO PRODUCTS (NAME, PRICE, IMAGE_PATH) VALUES " +
               "('Demon Slayer Figure', 29.99, 'Images/demonslayer.jpeg'), " +
-              "('Naruto Uzumaki Figure', 39.99, 'Images/naruto.jpg'), " +
-              "('Sasuke Uchiha Figure', 35.99, 'Images/sasuke.jpg'), " +
-              "('Goku Figure', 49.99, 'Images/goku.jpg'), " +
-              "('Vegeta Figure', 45.99, 'Images/vegeta.jpg'), " +
-              "('One Piece Luffy', 39.99, 'Images/luffy.jpg')";
+              "('Naruto Uzumaki Figure', 39.99, 'Images/naruto.jpeg'), " +
+              "('Sasuke Uchiha Figure', 35.99, 'Images/sasuke.jpeg'), " +
+              "('Goku Figure', 49.99, 'Images/goku.png'), " +
+              "('Vegeta Figure', 45.99, 'Images/vegeta.jpeg'), " +
+              "('One Piece Luffy', 39.99, 'Images/luffy.jpeg')";
         statement.executeUpdate(sql);
 
         System.out.println("Product table created and populated.");

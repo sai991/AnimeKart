@@ -5,137 +5,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Animekart</title>
-  <link rel="stylesheet" href="stylehome.css"> 
+  <link rel="stylesheet" href="stylehome.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="HomePage.js"></script>
 </head>
 
-<body>
-<!-- Toolbar -->
-<nav class="navbar">
-  <h1>Anime Toys Store</h1>
-  <div class="navbar-icons">
-    <a href="#profile">👤 My Profile</a>
-    <a href="#orders">📜 Orders</a>
-    <a href="#cart">🛒 Cart</a>
-  </div>
-</nav>
+<body ng-app="homeApp" ng-controller="homeController">
+  <!-- Toolbar -->
+  <nav class="navbar">
+    <h1>Anime Toys Store</h1>
+    <div class="navbar-icons">
+      <a href="Profile.html">👤 My Profile</a>
+      <a href="#orders">📜 Orders</a>
+      <a href="#cart">🛒 Cart</a>
+    </div>
+  </nav>
 
-<!-- Top Section -->
-<div class="top-section">
-  <h2>Welcome to Animekart!</h2>
-  <p>Discover the best anime toys, figures, and collectibles.</p>
-</div>
+  <!-- Top Section -->
+  <div class="top-section">
+    <h2>Welcome to Animekart!</h2>
+    <p>Discover the best anime toys, figures, and collectibles.</p>
+  </div>
 
-<!-- Product Grid -->
-<div class="product-grid">
-  <!-- Card 1 -->
-  <div class="product-card">
-    <img src="Images/demonslayer.jpeg" alt="Demon Slayer Figure" class="product-image">
-    <div class="product-details">
-      <h3>Demon Slayer Figure</h3>
-      <p>$29.99 USD</p>
-      <button class="btn">Add To Cart</button>
+  <!-- Product Grid -->
+  <div class="product-grid">
+    <div class="product-card" ng-repeat="product in products">
+      <img ng-src="{{product.imagePath}}" alt="{{product.name}}" class="product-image">
+      <div class="product-details">
+        <h3>{{product.name}}</h3>
+        <p>${{product.price}}</p>
+        <button class="btn" ng-click="addToCart(product.id)">Add To Cart</button>
+      </div>
     </div>
   </div>
-  <!-- Card 2 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Naruto Uzumaki Figure" class="product-image">
-    <div class="product-details">
-      <h3>Naruto Uzumaki Figure</h3>
-      <p>$39.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 3 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Sasuke Uchiha Figure" class="product-image">
-    <div class="product-details">
-      <h3>Sasuke Uchiha Figure</h3>
-      <p>$35.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 4 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Goku Figure" class="product-image">
-    <div class="product-details">
-      <h3>Goku Figure</h3>
-      <p>$49.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 5 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Vegeta Figure" class="product-image">
-    <div class="product-details">
-      <h3>Vegeta Figure</h3>
-      <p>$45.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 6 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="One Piece Luffy" class="product-image">
-    <div class="product-details">
-      <h3>One Piece Luffy</h3>
-      <p>$39.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 7 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Zoro Roronoa Figure" class="product-image">
-    <div class="product-details">
-      <h3>Zoro Roronoa Figure</h3>
-      <p>$44.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 8 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Tanjiro Kamado" class="product-image">
-    <div class="product-details">
-      <h3>Tanjiro Kamado</h3>
-      <p>$34.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 9 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Nezuko Kamado" class="product-image">
-    <div class="product-details">
-      <h3>Nezuko Kamado</h3>
-      <p>$39.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 10 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Inosuke Hashibira" class="product-image">
-    <div class="product-details">
-      <h3>Inosuke Hashibira</h3>
-      <p>$36.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 11 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Hinata Shoyo" class="product-image">
-    <div class="product-details">
-      <h3>Hinata Shoyo</h3>
-      <p>$29.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-  <!-- Card 12 -->
-  <div class="product-card">
-    <img src="https://via.placeholder.com/200x200" alt="Kageyama Tobio" class="product-image">
-    <div class="product-details">
-      <h3>Kageyama Tobio</h3>
-      <p>$33.99 USD</p>
-      <button class="btn">Add To Cart</button>
-    </div>
-  </div>
-</div>
 </body>
 
 </html>
