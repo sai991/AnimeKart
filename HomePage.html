@@ -17,7 +17,11 @@
     <div class="navbar-icons">
       <a href="Profile.html">👤 My Profile</a>
       <a href="#orders">📜 Orders</a>
-      <a href="#cart">🛒 Cart</a>
+      <a href="cart.html">
+        🛒 Cart
+        <span id="cartBadge" class="cart-badge">0</span>
+      </a>
+      
     </div>
   </nav>
 
@@ -34,7 +38,7 @@
       <div class="product-details">
         <h3>{{product.name}}</h3>
         <p>${{product.price}}</p>
-        <button class="btn" ng-click="addToCart(product.id)">Add To Cart</button>
+        <button class="btn" ng-click="addToCart(product.id,product.name,product.price)">Add To Cart</button>
       </div>
     </div>
   </div>

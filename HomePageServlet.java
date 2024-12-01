@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.gson.*;
+import java.math.BigDecimal;
+
+
 
 // Data structure for JSON parsing
 class RequestData {
@@ -20,6 +23,12 @@ class RequestData {
     String phoneNumber;
     String address;
     String orderDetails;
+
+
+      String userId;
+    String productId;
+    String productName;
+    String productPrice;
 }
 
 
@@ -103,6 +112,13 @@ public class HomePageServlet extends HttpServlet {
                     outputJson = "{\"status\":\"error\",\"message\":\"User not logged in\"}";
                       }
                      break;
+                case "addToCart":
+                    outputJson = addToCart(requestData.userId, requestData.productId, requestData.productName, requestData.productPrice);
+                    break;
+
+                case "fetchCart":
+                    outputJson = fetchCart(requestData.userId);
+                    break;
                 default:
                     outputJson = "{\"status\":\"error\",\"message\":\"Invalid action\"}";
             }
@@ -212,6 +228,56 @@ public class HomePageServlet extends HttpServlet {
         return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
     }
 }
+
+// Add this method to handle adding items to the cart
+private String addToCart(String userId, String productId, String productName, String productPrice) {
+    try {
+        String sql = "INSERT INTO CART (USERID, ITEMNAME, PRICE) VALUES (?, ?, ?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, Integer.parseInt(userId));
+        ps.setString(2, productName);
+        ps.setBigDecimal(3, new BigDecimal(productPrice));
+        ps.executeUpdate();
+
+        // Fetch updated cart count
+        sql = "SELECT COUNT(*) AS itemCount FROM CART WHERE USERID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, Integer.parseInt(userId));
+        ResultSet rs = ps.executeQuery();
+        int itemCount = 0;
+        if (rs.next()) {
+            itemCount = rs.getInt("itemCount");
+        }
+        return "{\"status\":\"success\",\"cartItemCount\":" + itemCount + "}";
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Failed to add to cart.\"}";
+    }
+}
+private String fetchCart(String userId) {
+    try {
+        String sql = "SELECT ITEMNAME, PRICE FROM CART WHERE USERID = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, Integer.parseInt(userId));
+        ResultSet rs = ps.executeQuery();
+
+        List<Map<String, String>> items = new ArrayList<>();
+        while (rs.next()) {
+            Map<String, String> item = new HashMap<>();
+            item.put("itemName", rs.getString("ITEMNAME"));
+            item.put("price", rs.getString("PRICE"));
+            items.add(item);
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(Map.of("status", "success", "items", items));
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Failed to fetch cart items.\"}";
+    }
+}
+
+
 
 
     private String handleViewOrders(String username) {
