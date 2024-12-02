@@ -1,0 +1,146 @@
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white; /* Match the profile form background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff6600; /* Orange theme for the navbar */
+    padding: 10px 30px;
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    position: relative;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* History Container */
+.history-container {
+    background-color: #fff5e6; /* Orange background for the history box */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 80%;
+    max-width: 900px;
+    margin-top: 100px; /* Adjust to compensate for fixed navbar */
+    text-align: center;
+    color: #ff6600;
+}
+
+/* Header for History Page */
+.history-header {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Order List */
+.order-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: white;
+}
+
+.order-item {
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-details {
+    flex: 1;
+}
+
+.order-details strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #ff6600;
+}
+
+.order-details span {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #ffe680;
+    color: #b37400;
+}
+
+.status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Total Section */
+.total-section {
+    margin-top: 20px;
+    text-align: right;
+    color: white;
+}
+
+.total-label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-amount {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Order Labels Styling */
+.order-item strong {
+    color: #ff6600; /* Orange color for the labels */
+    font-weight: bold; /* Ensure the labels are bold */
+}
+

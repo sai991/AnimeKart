@@ -26,7 +26,7 @@ public class MakeDatabase {
             printTable("USER", 7);
 
             // Print the order table to verify
-            printTable("ORDERS", 4);
+            printTable("ORDERS", 5);
 
 
   printTable("PRODUCTS", 3);
@@ -124,23 +124,26 @@ public class MakeDatabase {
     }
 
     static void makeOrderTable() throws SQLException {
-        // Drop the table if it already exists
-        String sql = "DROP TABLE IF EXISTS ORDERS";
-        statement.executeUpdate(sql);
+    // Drop the table if it already exists
+    String sql = "DROP TABLE IF EXISTS ORDERS";
+    statement.executeUpdate(sql);
 
-        // Create the order table with the required fields
-        sql = "CREATE TABLE ORDERS (" +
-                "ORDERID INT AUTO_INCREMENT PRIMARY KEY, " +
-                "USERID INT, " +
-                "TOTALCOST DECIMAL(10, 2), " +
-                "STATUS VARCHAR(20), " +
-                "FOREIGN KEY (USERID) REFERENCES USER(USERID))";
-        statement.executeUpdate(sql);
+    // Create the order table with the required fields
+    sql = "CREATE TABLE ORDERS (" +
+            "ORDERID INT AUTO_INCREMENT PRIMARY KEY, " +
+            "USERID INT, " +
+            "ITEMNAME VARCHAR(100), " +
+            "PRICE DECIMAL(10, 2), " + // Individual price of each item
+            "STATUS VARCHAR(20), " + // Status of the order (e.g., Pending, Shipped)
+            "TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP, " + // Time the order was placed
+            "FOREIGN KEY (USERID) REFERENCES USER(USERID))";
+    statement.executeUpdate(sql);
 
-        // Insert sample rows
-        sql = "INSERT INTO ORDERS (USERID, TOTALCOST, STATUS) VALUES " +
-                "(1, 59.98, 'Shipped'), " +
-                "(2, 79.98, 'Pending')";
-        statement.executeUpdate(sql);
-    }
+    // Insert sample rows
+    sql = "INSERT INTO ORDERS (USERID, ITEMNAME, PRICE, STATUS, TIMESTAMP) VALUES " +
+            "(1, 'Naruto Uzumaki Figure', 59.98, 'Shipped', '2024-11-29 10:00:00'), " +
+            "(2, 'Sasuke Uchiha Figure', 79.98, 'Pending', '2024-11-30 12:00:00')";
+    statement.executeUpdate(sql);
+}
+
 }

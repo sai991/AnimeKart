@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Cart</title>
+  <title>Cart</title>
   <link rel="stylesheet" href="cart.css">
   <script src="cart.js" defer></script>
 </head>
@@ -18,21 +16,20 @@
     <div class="navbar-icons">
       <a href="HomePage.html">🏠 Home</a>
       <a href="Profile.html">👤 My Profile</a>
-      <a href="#">🛒 Cart</a>
+      <a href="history.html">📜 Orders</a>
+      <a href="cart.html">🛒 Cart</a>
     </div>
   </nav>
 
   <!-- Cart Section -->
   <div class="cart-container">
     <h2>Your Cart</h2>
-    <div id="cartItems" class="cart-items">
-      <!-- Cart items will be dynamically populated here -->
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+      <strong>Total: $<span id="cartTotal">0.00</span></strong>
     </div>
-    <div class="cart-total">
-      <strong>Total:</strong> $<span id="cartTotal">0.00</span>
-    </div>
+    <button class="btn" id="placeOrder">Place Order</button>
   </div>
 </body>
 
 </html>
-

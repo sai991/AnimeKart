@@ -23,6 +23,7 @@ class RequestData {
     String phoneNumber;
     String address;
     String orderDetails;
+    String cartId;
 
 
       String userId;
@@ -97,9 +98,6 @@ public class HomePageServlet extends HttpServlet {
                 case "signup":
                     outputJson = handleSignup(requestData);
                     break;
-                case "placeOrder":
-                    outputJson = handlePlaceOrder(requestData.username, requestData.orderDetails);
-                    break;
                 case "viewOrders":
                     outputJson = handleViewOrders(requestData.username);
                     break;
@@ -119,6 +117,24 @@ public class HomePageServlet extends HttpServlet {
                 case "fetchCart":
                     outputJson = fetchCart(requestData.userId);
                     break;
+
+                case "deleteCartItem":
+                    System.out.println("user id:"+ requestData.userId +" cartid:"+requestData.cartId);
+                     int userId = Integer.parseInt(requestData.userId);
+                     int cartId = Integer.parseInt(requestData.cartId);
+                    outputJson = deleteCartItem(userId, cartId);
+                     break;
+
+                case "placeOrder":
+                     userId = Integer.parseInt(requestData.userId);
+                    outputJson = placeOrder(userId);
+                    break;
+
+                case "fetchOrderHistory":
+                    userId = Integer.parseInt(requestData.userId);
+                    outputJson = fetchOrderHistory(userId);
+                    break;    
+    
                 default:
                     outputJson = "{\"status\":\"error\",\"message\":\"Invalid action\"}";
             }
@@ -228,6 +244,82 @@ public class HomePageServlet extends HttpServlet {
         return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
     }
 }
+private String deleteCartItem(int userId, int cartId) {
+    try {
+        String sql = "DELETE FROM CART WHERE CARTID = ? AND USERID = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, cartId);
+        ps.setInt(2, userId);
+
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected > 0) {
+            return "{\"status\":\"success\"}";
+        } else {
+            return "{\"status\":\"failure\",\"message\":\"Item not found or not authorized\"}";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
+    }
+}
+
+private String fetchOrderHistory(int userId) {
+    try {
+        String sql = "SELECT ORDERID, ITEMNAME, PRICE, STATUS, TIMESTAMP FROM ORDERS WHERE USERID = ? ORDER BY TIMESTAMP DESC";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, userId);
+
+        ResultSet rs = ps.executeQuery();
+        List<Map<String, String>> orders = new ArrayList<>();
+
+        while (rs.next()) {
+            Map<String, String> order = new HashMap<>();
+            order.put("orderId", String.valueOf(rs.getInt("ORDERID")));
+            order.put("itemName", rs.getString("ITEMNAME"));
+            order.put("price", String.valueOf(rs.getDouble("PRICE")));
+            order.put("status", rs.getString("STATUS"));
+            order.put("timestamp", rs.getString("TIMESTAMP"));
+            orders.add(order);
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(orders);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
+    }
+}
+
+
+private String placeOrder(int userId) {
+    try {
+        // Insert items from the CART table into the ORDERS table
+        String insertOrderSql = "INSERT INTO ORDERS (USERID, ITEMNAME, PRICE, STATUS, TIMESTAMP) " +
+                                "SELECT USERID, ITEMNAME, PRICE, 'Pending', NOW() FROM CART WHERE USERID = ?";
+        PreparedStatement insertOrderPs = conn.prepareStatement(insertOrderSql);
+        insertOrderPs.setInt(1, userId);
+
+        int rowsInserted = insertOrderPs.executeUpdate();
+        if (rowsInserted > 0) {
+            // Clear the CART table after placing the order
+            String clearCartSql = "DELETE FROM CART WHERE USERID = ?";
+            PreparedStatement clearCartPs = conn.prepareStatement(clearCartSql);
+            clearCartPs.setInt(1, userId);
+            clearCartPs.executeUpdate();
+
+            return "{\"status\":\"success\",\"message\":\"Order placed successfully.\"}";
+        } else {
+            return "{\"status\":\"failure\",\"message\":\"No items in the cart.\"}";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
+    }
+}
+
+
+
+
 
 // Add this method to handle adding items to the cart
 private String addToCart(String userId, String productId, String productName, String productPrice) {
@@ -256,7 +348,7 @@ private String addToCart(String userId, String productId, String productName, St
 }
 private String fetchCart(String userId) {
     try {
-        String sql = "SELECT ITEMNAME, PRICE FROM CART WHERE USERID = ?";
+        String sql = "SELECT CARTID, ITEMNAME, PRICE FROM CART WHERE USERID = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, Integer.parseInt(userId));
         ResultSet rs = ps.executeQuery();
@@ -266,6 +358,7 @@ private String fetchCart(String userId) {
             Map<String, String> item = new HashMap<>();
             item.put("itemName", rs.getString("ITEMNAME"));
             item.put("price", rs.getString("PRICE"));
+            item.put("cartId", rs.getString("CARTID"));
             items.add(item);
         }
 
