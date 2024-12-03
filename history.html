@@ -5,21 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order History</title>
   <link rel="stylesheet" href="history.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <script src="history.js" defer></script>
 </head>
-<body>
+<body ng-app="history" ng-controller="historyController">
+  <!-- Top Navigation Bar -->
   <nav class="navbar">
     <h1>Anime Toys Store</h1>
     <div class="navbar-icons">
       <a href="HomePage.html">🏠 Home</a>
       <a href="Profile.html">👤 My Profile</a>
       <a href="cart.html">🛒 Cart</a>
+      <a href="#" ng-click="showLogoutPopup()">🚪 Logout</a>
     </div>
   </nav>
 
+  <!-- Order History Section -->
   <div class="history-container">
     <h2>Order History</h2>
-    <div id="orderHistory"></div>
+    <div id="orderHistory">
+      <p ng-if="isLoading">Loading your order history...</p>
+      <p ng-if="!isLoading && orderHistory.length === 0">You have no order history.</p>
+      <div class="order-item" ng-repeat="order in orderHistory">
+        <p><strong>Item:</strong> {{ order.itemName }}</p>
+        <p><strong>Price:</strong> ${{ order.price }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+        <p><strong>Order Date:</strong> {{ order.timestamp }}</p>
+      </div>
+    </div>
   </div>
 </body>
 </html>

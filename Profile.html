@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile</title>
-  <link rel="stylesheet" href="profile.css"> <!-- Link to shared profile styles -->
-  <script src="Profile.js" defer></script> <!-- Link to the JS file -->
+  <link rel="stylesheet" href="profile.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="Profile.js" defer></script>
 </head>
 
-<body>
+<body ng-app="profileApp" ng-controller="profileController">
   <!-- Top Navigation Bar -->
   <nav class="navbar">
     <h1>Anime Toys Store</h1>
@@ -17,6 +18,7 @@
       <a href="HomePage.html">🏠 Home</a>
       <a href="history.html">📜 Orders</a>
       <a href="cart.html">🛒 Cart</a>
+      <a href="#" ng-click="showLogoutPopup()">🚪 Logout</a>
     </div>
   </nav>
 

@@ -18,16 +18,15 @@ angular.module("homeApp", []).controller("homeController", function ($scope, $ht
     );
 
     // Add to cart function
-
     $scope.addToCart = function (productId, productName, productPrice) {
         console.log("Adding product to cart:", productId);
-    
+
         const userId = sessionStorage.getItem("USERID");
         if (!userId) {
             alert("You are not logged in. Please log in first.");
             return;
         }
-    
+
         const requestData = {
             userId: userId,
             productId: productId,
@@ -35,7 +34,7 @@ angular.module("homeApp", []).controller("homeController", function ($scope, $ht
             productPrice: productPrice,
             action: "addToCart"
         };
-    
+
         // Send the data to the backend API
         fetch("http://localhost:40109/shopping", {
             method: "POST",
@@ -57,7 +56,7 @@ angular.module("homeApp", []).controller("homeController", function ($scope, $ht
             })
             .catch((error) => console.error("Error adding product to cart:", error));
     };
-    
+
     // Update cart badge with item count
     function updateCartBadge(itemCount) {
         const cartBadge = document.getElementById("cartBadge");
@@ -67,6 +66,34 @@ angular.module("homeApp", []).controller("homeController", function ($scope, $ht
         }
     }
 
+    // Logout function
+    $scope.showLogoutPopup = function () {
+        console.log("Showing logout popup");
+        const popupHtml = `
+            <div class="logout-popup" id="logoutPopup">
+                <h3>Are you sure you want to logout?</h3>
+                <div class="logout-popup-buttons">
+                    <button class="logout-btn logout-btn-yes" onclick="confirmLogout()">Yes</button>
+                    <button class="logout-btn logout-btn-no" onclick="closeLogoutPopup()">No</button>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML("beforeend", popupHtml);
+    };
+
+    // Confirm logout function
+    window.confirmLogout = function () {
+        console.log("User confirmed logout");
+        sessionStorage.clear();
+        window.location.href = "login.html";
+    };
+
+    // Close logout popup
+    window.closeLogoutPopup = function () {
+        console.log("Closing logout popup");
+        const popup = document.getElementById("logoutPopup");
+        if (popup) {
+            popup.remove();
+        }
+    };
 });
-
-

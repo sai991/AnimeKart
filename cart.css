@@ -1,133 +1,166 @@
-/* .cart-container {
-    padding: 20px;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-  }
-  
-  .cart-summary {
-    margin-top: 20px;
-    font-size: 18px;
-  }
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-  }
-   */
-  /* Toolbar Styling */
-  /* .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ff6600; /* Same orange as homepage */
-    /* padding: 10px 30px;
-    color: white;
-  }
-   */
-  /* .navbar h1 {
-    margin: 0;
-    font-size: 24px; */
-  /* }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-  }
-  
-  .navbar a:hover {
-    text-decoration: underline;
-  }
-  .cart-badge {
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 50%;
-    padding: 2px 6px;
-    position: relative;
-    top: -10px;
-    left: -10px;
-    display: none; /* Hidden initially */
-/* }  */
 
-
-/* General Styling */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-  }
-  
-  /* Toolbar Styling */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ff6600;
-    padding: 10px 30px;
-    color: white;
-  }
-  
-  .navbar h1 {
-    margin: 0;
-    font-size: 24px;
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-  }
-  
-  .navbar a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Cart Section Styling */
-  .cart-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
-  .cart-container h2 {
-    margin: 0;
-    text-align: center;
-    color: #ff6600;
-  }
-  
-  .cart-items {
-    margin-top: 20px;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    padding: 10px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .cart-total {
-    margin-top: 20px;
-    text-align: right;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  
-  
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; /* Same background as other pages */
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff6600;
+  padding: 10px 30px;
+  color: white;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Cart Section Styling */
+.cart-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff5e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cart-container h2 {
+  margin: 0;
+  text-align: center;
+  color: #ff6600; /* Orange title */
+  margin-bottom: 20px;
+}
+
+/* Cart Item Styling */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.item-info span {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+  background-color: #ff6600; /* Orange color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #cc5200; /* Darker orange */
+}
+
+/* Total Summary Styling */
+.cart-summary {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Place Order Button */
+#placeOrder {
+  background-color: #ff6600; /* Orange button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+#placeOrder:hover {
+  background-color: #cc5200; /* Darker orange */
+}
+ /* Logout Confirmation Popup */
+ .logout-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  text-align: center;
+}
+
+.logout-popup h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+.logout-popup-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-btn-yes {
+  background-color: #ff6600;
+  color: white;
+}
+
+.logout-btn-yes:hover {
+  background-color: #ff8c00;
+}
+
+.logout-btn-no {
+  background-color: #ddd;
+  color: #333;
+}
+
+.logout-btn-no:hover {
+  background-color: #ccc;
+}
 
   
+
+
 
 

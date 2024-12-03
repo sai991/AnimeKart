@@ -71,4 +71,58 @@ body {
   #editProfile:hover {
     background-color: #ff8533;
   }
+
+   /* Logout Confirmation Popup */
+.logout-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  text-align: center;
+}
+
+.logout-popup h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+.logout-popup-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logout-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-btn-yes {
+  background-color: #ff6600;
+  color: white;
+}
+
+.logout-btn-yes:hover {
+  background-color: #ff8c00;
+}
+
+.logout-btn-no {
+  background-color: #ddd;
+  color: #333;
+}
+
+.logout-btn-no:hover {
+  background-color: #ccc;
+}
+
+  
   

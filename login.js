@@ -56,14 +56,16 @@ function requestListener() {
     }
 }
 
+
 function println(outputStr) {
-    const outputElement = document.getElementById("output");
-    if (outputElement) {
-        outputElement.innerHTML += outputStr + "<br>";
+    const errorElement = document.getElementById("loginErrorMessage");
+    if (errorElement) {
+        errorElement.textContent = outputStr; // Update the error message
     } else {
-        console.log(outputStr);
+        console.error("Error element not found:", outputStr);
     }
 }
+
 
 function setUID(UID) {
     sessionStorage.setItem("USERID", UID.toString());

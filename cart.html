@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cart</title>
   <link rel="stylesheet" href="cart.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <script src="cart.js" defer></script>
 </head>
 
-<body>
+<body ng-app="cart" ng-controller="cartController">
   <!-- Top Navigation Bar -->
   <nav class="navbar">
     <h1>Anime Toys Store</h1>
@@ -18,13 +19,16 @@
       <a href="Profile.html">👤 My Profile</a>
       <a href="history.html">📜 Orders</a>
       <a href="cart.html">🛒 Cart</a>
+      <a href="#" ng-click="showLogoutPopup()">🚪 Logout</a>
     </div>
   </nav>
 
   <!-- Cart Section -->
   <div class="cart-container">
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
+    <h2>Your Cart </h2>
+    <div id="cartItems">
+      <!-- Dynamically populated cart items will go here -->
+    </div>
     <div class="cart-summary">
       <strong>Total: $<span id="cartTotal">0.00</span></strong>
     </div>

@@ -11,6 +11,40 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Define AngularJS Application and Controller
+angular.module("cart", []).controller("cartController", function ($scope) {
+  // Logout functionality
+  $scope.showLogoutPopup = function () {
+    console.log("Showing logout popup");
+    const popupHtml = `
+      <div class="logout-popup" id="logoutPopup">
+        <h3>Are you sure you want to logout?</h3>
+        <div class="logout-popup-buttons">
+          <button class="logout-btn logout-btn-yes" onclick="confirmLogout()">Yes</button>
+          <button class="logout-btn logout-btn-no" onclick="closeLogoutPopup()">No</button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", popupHtml);
+  };
+
+  // Confirm logout function
+  window.confirmLogout = function () {
+    console.log("User confirmed logout");
+    sessionStorage.clear();
+    window.location.href = "login.html";
+  };
+
+  // Close logout popup function
+  window.closeLogoutPopup = function () {
+    console.log("Closing logout popup");
+    const popup = document.getElementById("logoutPopup");
+    if (popup) {
+      popup.remove();
+    }
+  };
+});
+
 // Fetch cart details
 function fetchCartData() {
   const userId = sessionStorage.getItem("USERID");
@@ -34,7 +68,7 @@ function fetchCartData() {
   })
     .then((response) => response.json())
     .then((data) => {
-        console.log("Cart Data:", data);
+      console.log("Cart Data:", data);
       const cartItemsDiv = document.getElementById("cartItems");
       const cartTotalSpan = document.getElementById("cartTotal");
 
@@ -49,7 +83,7 @@ function fetchCartData() {
             <span>${item.itemName}</span>
             <span>$${item.price}</span>
           </div>
-          <button class="delete-btn" onclick="deleteCartItem(${item.cartId})">❌</button>
+          <button class="delete-btn" onclick="deleteCartItem(${item.cartId})">Delete</button>
         `;
         cartItemsDiv.appendChild(itemDiv);
         total += parseFloat(item.price);
@@ -70,7 +104,6 @@ function deleteCartItem(cartId) {
     action: "deleteCartItem",
   };
   console.log("Deleting cart item with ID:", cartId);
-
 
   fetch(cartUrl, {
     method: "POST",
