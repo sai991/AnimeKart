@@ -22,11 +22,15 @@ public class MakeDatabase {
 
             makeProductTable();
 
+            makeAdminTable();
+
             // Print the user table to verify
             printTable("USER", 7);
 
             // Print the order table to verify
             printTable("ORDERS", 5);
+
+            printTable("ADMIN",3);
 
 
   printTable("PRODUCTS", 3);
@@ -143,6 +147,23 @@ public class MakeDatabase {
     sql = "INSERT INTO ORDERS (USERID, ITEMNAME, PRICE, STATUS, TIMESTAMP) VALUES " +
             "(1, 'Naruto Uzumaki Figure', 59.98, 'Shipped', '2024-11-29 10:00:00'), " +
             "(2, 'Sasuke Uchiha Figure', 79.98, 'Pending', '2024-11-30 12:00:00')";
+    statement.executeUpdate(sql);
+}
+
+ static void makeAdminTable() throws SQLException {
+    // Drop the table if it already exists
+    String sql = "DROP TABLE IF EXISTS ADMIN";
+    statement.executeUpdate(sql);
+
+    // Create the order table with the required fields
+    sql = "CREATE TABLE ADMIN (" +
+            "ADMINID INT AUTO_INCREMENT PRIMARY KEY, " +
+            "USERNAME VARCHAR(50) NOT NULL, " +
+            "PASSWORD VARCHAR(50) NOT NULL )" ;
+    statement.executeUpdate(sql);
+
+    // Insert sample rows
+    sql = "INSERT INTO ADMIN (USERNAME, PASSWORD) VALUES ('admin', 'adminpass')";
     statement.executeUpdate(sql);
 }
 

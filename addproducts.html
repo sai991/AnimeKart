@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Products</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="addProducts.js" defer></script>
+</head>
+<body ng-app="adminApp" ng-controller="addProductController">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>Anime Toys Store</h1>
+    <div class="navbar-icons">
+      <a href="#" ng-click="logout()">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Add Product Form -->
+  <div class="container">
+    <h2>Add Product</h2>
+    <form ng-submit="addProduct()">
+      <input type="text" ng-model="product.name" placeholder="Product Name" required><br>
+      <input type="text" ng-model="product.price" placeholder="Price" required><br>
+      <input type="text" ng-model="product.image" placeholder="ImageName" required><br>
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+</body>
+</html>

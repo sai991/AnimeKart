@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Order Status</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="updateOrderStatus.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Anime Toys Store</h1>
+        <div class="navbar-icons">
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </nav>
+  <div class="container">
+    <h2>Update Order Status</h2>
+    <input type="text" id="orderId" placeholder="Order ID" required><br>
+    <select id="status">
+      <option value="Pending">Pending</option>
+      <option value="Shipped">Shipped</option>
+    </select><br>
+    <button onclick="updateStatus()">Update Status</button>
+  </div>
+</body>
+</html>
