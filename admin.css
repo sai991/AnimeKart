@@ -69,10 +69,25 @@ body {
   }
 
   .navbar {
-    background-color: #ff6600;
-    color: white;
-    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: #ff6600; /* Orange theme */
+    padding: 10px 30px;
+    color: white;
   }
   
+  .navbar h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }

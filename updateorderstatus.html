@@ -4,25 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Update Order Status</title>
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="updateOrder.css">
   <script src="updateOrderStatus.js" defer></script>
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Anime Toys Store</h1>
-        <div class="navbar-icons">
-          <a href="#" onclick="logout()">Logout</a>
-        </div>
-      </nav>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>Anime Toys Store</h1>
+    <div class="navbar-icons">
+        <a href="adminHomepage.html">🏠 Home</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
   <div class="container">
     <h2>Update Order Status</h2>
-    <input type="text" id="orderId" placeholder="Order ID" required><br>
-    <select id="status">
-      <option value="Pending">Pending</option>
-      <option value="Shipped">Shipped</option>
-      <option value="Shipped">Delivered</option>
-    </select><br>
-    <button onclick="updateStatus()">Update Status</button>
+    <div id="ordersContainer">
+      <!-- Orders will be dynamically populated here -->
+      <p>Loading orders...</p>
+    </div>
   </div>
 </body>
 </html>

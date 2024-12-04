@@ -34,6 +34,9 @@ class RequestData {
     String name;
     String price;
     String image;
+
+    String orderId;
+    String status;
 }
 
 
@@ -104,7 +107,13 @@ public class AdminServlet extends HttpServlet {
                     outputJson = addProduct(requestData.name,requestData.price,requestData.image);
                     break;    
                
+                case "updateOrderStatus":
+                    outputJson = updateOrderStatus(requestData.orderId,requestData.status);
+                    break;
 
+                case "fetchOrders":
+                    outputJson = fetchOrders(); 
+                    break;
                 
                 default:
                     outputJson = "{\"status\":\"error\",\"message\":\"Invalid action\"}";
@@ -153,7 +162,7 @@ public class AdminServlet extends HttpServlet {
         // Setting values for the placeholders in the query
         ps.setString(1, name);
         ps.setString(2, price);
-        ps.setString(3, imagePath);
+        ps.setString(3, "Images/"+imagePath);
 
         // Executing the query and checking the number of affected rows
         int rowsAffected = ps.executeUpdate();
@@ -171,18 +180,17 @@ public class AdminServlet extends HttpServlet {
 
 
 
-    private String handlePlaceOrder(String username, String orderDetails) {
+    private String updateOrderStatus(String orderId, String status) {
         try {
-            String sql = "INSERT INTO ORDERS (USERID, ORDER_DETAILS, STATUS) " +
-                    "SELECT USERID, ?, 'Pending' FROM USERS WHERE USERNAME = ?";
+            String sql = "UPDATE ORDERS SET STATUS = ? WHERE ORDERID=?";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setString(1, orderDetails);
-            ps.setString(2, username);
+            ps.setString(1, status);
+            ps.setString(2, orderId);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1) {
-                return "{\"status\":\"success\",\"message\":\"Order placed successfully\"}";
+                return "{\"status\":\"success\",\"message\":\"Delivery status updated successfully\"}";
             } else {
                 return "{\"status\":\"failure\",\"message\":\"Failed to place order\"}";
             }
@@ -194,84 +202,49 @@ public class AdminServlet extends HttpServlet {
 
     
 
-private String fetchOrderHistory(int userId) {
+private String fetchOrders() {
     try {
-        String sql = "SELECT ORDERID, ITEMNAME, PRICE, STATUS, TIMESTAMP FROM ORDERS WHERE USERID = ? ORDER BY TIMESTAMP DESC";
+        // Query to fetch all orders
+        String sql = "SELECT ORDERID, USERID, ITEMNAME, PRICE, STATUS, TIMESTAMP FROM ORDERS";
         PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, userId);
 
+        // Execute the query and process the results
         ResultSet rs = ps.executeQuery();
-        List<Map<String, String>> orders = new ArrayList<>();
+        StringBuilder jsonResponse = new StringBuilder();
+        jsonResponse.append("{\"status\":\"success\",\"orders\":[");
 
+        boolean isFirst = true;
         while (rs.next()) {
-            Map<String, String> order = new HashMap<>();
-            order.put("orderId", String.valueOf(rs.getInt("ORDERID")));
-            order.put("itemName", rs.getString("ITEMNAME"));
-            order.put("price", String.valueOf(rs.getDouble("PRICE")));
-            order.put("status", rs.getString("STATUS"));
-            order.put("timestamp", rs.getString("TIMESTAMP"));
-            orders.add(order);
-        }
-
-        Gson gson = new Gson();
-        return gson.toJson(orders);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
-    }
-}
-
-
-private String placeOrder(int userId) {
-    try {
-        // Insert items from the CART table into the ORDERS table
-        String insertOrderSql = "INSERT INTO ORDERS (USERID, ITEMNAME, PRICE, STATUS, TIMESTAMP) " +
-                                "SELECT USERID, ITEMNAME, PRICE, 'Pending', NOW() FROM CART WHERE USERID = ?";
-        PreparedStatement insertOrderPs = conn.prepareStatement(insertOrderSql);
-        insertOrderPs.setInt(1, userId);
-
-        int rowsInserted = insertOrderPs.executeUpdate();
-        if (rowsInserted > 0) {
-            // Clear the CART table after placing the order
-            String clearCartSql = "DELETE FROM CART WHERE USERID = ?";
-            PreparedStatement clearCartPs = conn.prepareStatement(clearCartSql);
-            clearCartPs.setInt(1, userId);
-            clearCartPs.executeUpdate();
-
-            return "{\"status\":\"success\",\"message\":\"Order placed successfully.\"}";
-        } else {
-            return "{\"status\":\"failure\",\"message\":\"No items in the cart.\"}";
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
-    }
-}
-
-
-    private String handleViewOrders(String username) {
-        try {
-            String sql = "SELECT O.ORDER_ID, O.ORDER_DETAILS, O.STATUS " +
-                    "FROM ORDERS O JOIN USERS U ON O.USER_ID = U.USER_ID " +
-                    "WHERE U.USERNAME = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
-
-            ResultSet rs = ps.executeQuery();
-            List<Map<String, String>> orders = new ArrayList<>();
-            while (rs.next()) {
-                Map<String, String> order = new HashMap<>();
-                order.put("orderId", String.valueOf(rs.getInt("ORDER_ID")));
-                order.put("orderDetails", rs.getString("ORDER_DETAILS"));
-                order.put("status", rs.getString("STATUS"));
-                orders.add(order);
+            if (!isFirst) {
+                jsonResponse.append(",");
+            } else {
+                isFirst = false;
             }
 
-            Gson gson = new Gson();
-            return gson.toJson(orders);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
+            // Build each order JSON object
+            jsonResponse.append("{")
+                        .append("\"orderId\":").append(rs.getInt("ORDERID")).append(",")
+                        .append("\"userId\":\"").append(rs.getString("USERID")).append("\",")
+                        .append("\"itemName\":\"").append(rs.getString("ITEMNAME")).append("\",")
+                        .append("\"price\":").append(rs.getDouble("PRICE")).append(",")
+                        .append("\"status\":\"").append(rs.getString("STATUS")).append("\",");
+
+            Timestamp timestamp = rs.getTimestamp("TIMESTAMP");
+            String timestampStr = timestamp != null ? timestamp.toString() : "";
+            jsonResponse.append("\"timestamp\":\"").append(timestampStr).append("\"}");
+
         }
+        jsonResponse.append("]}");
+
+        // Debug: Log the generated JSON
+        System.out.println("JSON Response: " + jsonResponse.toString());
+
+        return jsonResponse.toString();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
     }
+}
+
 }

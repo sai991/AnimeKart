@@ -1,0 +1,121 @@
+/* General Page Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  /* Navbar Styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff6600; /* Orange theme */
+    padding: 10px 30px;
+    color: white;
+  }
+  
+  .navbar h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Container for Orders */
+  .container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff5e6; /* Light orange background */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container h2 {
+    text-align: center;
+    color: #ff6600; /* Orange header */
+    margin-bottom: 20px;
+  }
+  
+  /* Individual Order Styling */
+  .order-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-item p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .order-item label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Dropdown Styling */
+  .status-select {
+    width: 100%;
+    max-width: 200px;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .status-select:focus {
+    outline: none;
+    border-color: #ff6600;
+    box-shadow: 0 0 5px rgba(255, 102, 0, 0.5);
+  }
+  
+  /* Update Button Styling */
+  button {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #cc5200; /* Darker orange */
+  }
+  
+  /* Logout Button in Navbar */
+  .navbar-icons a {
+    background-color: #cc5200;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .navbar-icons a:hover {
+    background-color: #ff6600;
+    color: white;
+  }
+  
+  /* Empty Orders Message */
+  .empty-orders {
+    text-align: center;
+    color: #555;
+    font-size: 18px;
+    margin: 20px 0;
+  }
+  
