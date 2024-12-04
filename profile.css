@@ -1,78 +1,111 @@
 /* Profile Page Styling */
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-  }
-  
-  /* Toolbar Styling */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #ff6600; /* Same orange as homepage */
-    padding: 10px 30px;
-    color: white;
-  }
-  
-  .navbar h1 {
-    margin: 0;
-    font-size: 24px;
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-  }
-  
-  .navbar a:hover {
-    text-decoration: underline;
-  }
-  
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
 
+/* Toolbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff6600; /* Same orange as homepage */
+  padding: 10px 30px;
+  color: white;
+}
 
+.navbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
 
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Profile Container */
 .profile-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background-color: #fff5e6;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-container h2 {
-    text-align: center;
-    color: #ff6600;
-  }
-  
-  .profile-field {
-    margin: 15px 0;
-    font-size: 16px;
-  }
-  
-  .profile-field strong {
-    color: #ff6600;
-  }
-  
-  #editProfile {
-    display: block;
-    margin: 20px auto;
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #editProfile:hover {
-    background-color: #ff8533;
-  }
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #fff5e6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-   /* Logout Confirmation Popup */
+.profile-container h2 {
+  text-align: center;
+  color: #ff6600;
+}
+
+/* Profile Field */
+.profile-field {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.profile-field strong {
+  color: #ff6600;
+}
+
+/* Centered Button Styling */
+button.btn {
+  display: block;
+  margin: 20px auto; /* Center the button horizontally */
+  background-color: #ff6600; /* Orange color */
+  color: white;
+  border: none;
+  padding: 12px 30px; /* Larger padding for emphasis */
+  font-size: 16px; /* Larger font size for readability */
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button.btn:hover {
+  background-color: #ff8533; /* Slightly lighter orange */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Success and Error Messages */
+.success-message {
+  color: #28a745; /* Green for success */
+  text-align: center;
+  margin-top: 15px;
+}
+
+.error-message {
+  color: #dc3545; /* Red for error */
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Editable Input Fields */
+.editable-input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.editable-input:focus {
+  border-color: #ff6600;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 102, 0, 0.5);
+}
+
+/* Logout Confirmation Popup */
 .logout-popup {
   position: fixed;
   top: 50%;
@@ -123,6 +156,3 @@ body {
 .logout-btn-no:hover {
   background-color: #ccc;
 }
-
-  
-  

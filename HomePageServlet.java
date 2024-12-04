@@ -133,7 +133,10 @@ public class HomePageServlet extends HttpServlet {
                 case "fetchOrderHistory":
                     userId = Integer.parseInt(requestData.userId);
                     outputJson = fetchOrderHistory(userId);
-                    break;    
+                    break;
+                case "updateProfile":
+                    outputJson = updateProfile(requestData);
+                    break;      
     
                 default:
                     outputJson = "{\"status\":\"error\",\"message\":\"Invalid action\"}";
@@ -197,6 +200,35 @@ public class HomePageServlet extends HttpServlet {
             return "{\"status\":\"error\",\"message\":\"Internal server error\"}";
         }
     }
+
+    private String updateProfile(RequestData requestData) {
+    try {
+        // Prepare the SQL update query
+        String sql = "UPDATE USER SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PHONENUMBER = ?, ADDRESS = ? WHERE USERID = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        // Set the parameters
+        ps.setString(1, requestData.firstName);
+        ps.setString(2, requestData.lastName);
+        ps.setString(3, requestData.email);
+        ps.setString(4, requestData.phoneNumber);
+        ps.setString(5, requestData.address);
+        ps.setInt(6, Integer.parseInt(requestData.userId));
+
+        // Execute the update
+        int rowsAffected = ps.executeUpdate();
+        if (rowsAffected == 1) {
+            return "{\"status\":\"success\",\"message\":\"Profile updated successfully.\"}";
+        } else {
+            return "{\"status\":\"failure\",\"message\":\"Failed to update profile. User may not exist.\"}";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "{\"status\":\"error\",\"message\":\"Internal server error.\"}";
+    }
+}
+
+
 
     private String handlePlaceOrder(String username, String orderDetails) {
         try {

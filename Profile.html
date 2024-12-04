@@ -26,23 +26,53 @@
   <div class="profile-container">
     <h2>My Profile</h2>
     <div id="profile-details" class="profile-box">
-      <div class="profile-field">
-        <strong>First Name:</strong> <span id="firstName"></span>
-      </div>
-      <div class="profile-field">
-        <strong>Last Name:</strong> <span id="lastName"></span>
-      </div>
-      <div class="profile-field">
-        <strong>Email:</strong> <span id="email"></span>
-      </div>
-      <div class="profile-field">
-        <strong>Phone Number:</strong> <span id="phoneNumber"></span>
-      </div>
-      <div class="profile-field">
-        <strong>Address:</strong> <span id="address"></span>
+      <form ng-if="isEditing">
+        <div class="profile-field">
+          <strong>First Name:</strong>
+          <input type="text" ng-model="profile.firstName" required />
+        </div>
+        <div class="profile-field">
+          <strong>Last Name:</strong>
+          <input type="text" ng-model="profile.lastName" required />
+        </div>
+        <div class="profile-field">
+          <strong>Email:</strong>
+          <input type="email" ng-model="profile.email" required />
+        </div>
+        <div class="profile-field">
+          <strong>Phone Number:</strong>
+          <input type="text" ng-model="profile.phoneNumber" required />
+        </div>
+        <div class="profile-field">
+          <strong>Address:</strong>
+          <input type="text" ng-model="profile.address" required />
+        </div>
+      </form>
+
+      <div ng-if="!isEditing">
+        <div class="profile-field">
+          <strong>First Name:</strong> {{ profile.firstName }}
+        </div>
+        <div class="profile-field">
+          <strong>Last Name:</strong> {{ profile.lastName }}
+        </div>
+        <div class="profile-field">
+          <strong>Email:</strong> {{ profile.email }}
+        </div>
+        <div class="profile-field">
+          <strong>Phone Number:</strong> {{ profile.phoneNumber }}
+        </div>
+        <div class="profile-field">
+          <strong>Address:</strong> {{ profile.address }}
+        </div>
       </div>
     </div>
-    <button class="btn" id="editProfile">Edit Profile</button>
+
+    <button class="btn" ng-click="toggleEditMode()">
+      {{ isEditing ? "Save" : "Edit Profile" }}
+    </button>
+    <p class="success-message" ng-if="successMessage">{{ successMessage }}</p>
+    <p class="error-message" ng-if="errorMessage">{{ errorMessage }}</p>
   </div>
 </body>
 
