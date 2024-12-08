@@ -5,9 +5,12 @@ let signupUrl = "http://localhost:40109/shopping";
 
 angular.module("signupApp", []).controller("signupController", function ($scope) {
     $scope.user = {}; // Initialize user object
+    $scope.errors = {}; // Initialize errors object
 
     $scope.submitSignup = function () {
         console.log("Signup Attempt");
+        $scope.errors = {}; // Clear previous errors
+
         if (validateSignup($scope)) {
             let signupData = {
                 firstName: $scope.user.firstName,
@@ -23,66 +26,71 @@ angular.module("signupApp", []).controller("signupController", function ($scope)
             sendSignupData(signupData);
         } else {
             console.log("Invalid input in signup");
-            alert("Please correct the highlighted errors.");
         }
     };
-});
 
-function validateSignup($scope) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phonePattern = /^\d{10}$/;
+    function validateSignup($scope) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^\d{10}$/;
 
-    let isValid = true;
+        let isValid = true;
 
-    const fields = [
-        { field: "firstName", condition: !$scope.user.firstName?.trim() },
-        { field: "lastName", condition: !$scope.user.lastName?.trim() },
-        { field: "email", condition: !emailPattern.test($scope.user.email) },
-        { field: "phoneNumber", condition: !phonePattern.test($scope.user.phoneNumber) },
-        { field: "address", condition: !$scope.user.address?.trim() },
-        { field: "password", condition: !$scope.user.password || $scope.user.password.length < 8 },
-        { field: "confirmPassword", condition: $scope.user.password !== $scope.user.confirmPassword },
-    ];
-
-    fields.forEach(({ field, condition }) => {
-        if (condition) {
-            highlightError(field);
+        if (!$scope.user.firstName?.trim()) {
+            $scope.errors.firstName = "First name cannot be empty.";
             isValid = false;
-        } else {
-            clearError(field);
         }
-    });
 
-    return isValid;
-}
+        if (!$scope.user.lastName?.trim()) {
+            $scope.errors.lastName = "Last name cannot be empty.";
+            isValid = false;
+        }
 
-function highlightError(fieldId) {
-    const element = document.getElementById(fieldId);
-    if (element) element.classList.add("error");
-}
+        if (!emailPattern.test($scope.user.email)) {
+            $scope.errors.email = "Please enter a valid email address.";
+            isValid = false;
+        }
 
-function clearError(fieldId) {
-    const element = document.getElementById(fieldId);
-    if (element) element.classList.remove("error");
-}
+        if (!phonePattern.test($scope.user.phoneNumber)) {
+            $scope.errors.phoneNumber = "Please enter a valid 10-digit phone number.";
+            isValid = false;
+        }
 
-function sendSignupData(signupData) {
-    let req = new XMLHttpRequest();
-    req.addEventListener("load", signupResponseHandler);
-    req.open("POST", signupUrl);
-    req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    req.send(JSON.stringify(signupData));
-    console.log("Sent to server: json =", JSON.stringify(signupData));
-}
+        if (!$scope.user.address?.trim()) {
+            $scope.errors.address = "Address cannot be empty.";
+            isValid = false;
+        }
 
-function signupResponseHandler() {
-    let response = JSON.parse(this.responseText);
-    if (response.status === "success") {
-        console.log("Signup Successful");
-        alert("Signup completed! Redirecting to login page.");
-        window.location.href = "login.html";
-    } else {
-        console.log("Signup Failed");
-        alert(response.message || "Signup failed, please try again.");
+        if (!$scope.user.password || $scope.user.password.length < 8) {
+            $scope.errors.password = "Password must be at least 8 characters long.";
+            isValid = false;
+        }
+
+        if ($scope.user.password !== $scope.user.confirmPassword) {
+            $scope.errors.confirmPassword = "Passwords do not match.";
+            isValid = false;
+        }
+
+        return isValid;
     }
-}
+
+    function sendSignupData(signupData) {
+        let req = new XMLHttpRequest();
+        req.addEventListener("load", signupResponseHandler);
+        req.open("POST", signupUrl);
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.send(JSON.stringify(signupData));
+        console.log("Sent to server: json =", JSON.stringify(signupData));
+    }
+
+    function signupResponseHandler() {
+        let response = JSON.parse(this.responseText);
+        if (response.status === "success") {
+            console.log("Signup Successful");
+            alert("Signup completed! Redirecting to login page.");
+            window.location.href = "login.html";
+        } else {
+            console.log("Signup Failed");
+            alert(response.message || "Signup failed, please try again.");
+        }
+    }
+});

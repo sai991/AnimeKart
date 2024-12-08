@@ -113,3 +113,14 @@ form {
     font-size: 14px;
     margin-top: 10px;
 }
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin: 5px 0 0;
+    text-align: left;
+  }
+  .input-box input.error,
+  .input-box textarea.error {
+    border-color: red;
+  }
+  
